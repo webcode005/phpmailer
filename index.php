@@ -1,8 +1,16 @@
 <?php
 include('smtp/PHPMailerAutoload.php');
 $html='Msg';
-echo smtp_mailer('EMAIL_TO','subject',$html);
-function smtp_mailer($to,$subject, $msg){
+
+$to = "RECIVER EMAILID";
+$from ="MAIL_FROM";
+$subject = "Attachment Subject";
+ $msg = "testing";
+// attach file 
+
+$attachment="uploads/pdf.pdf";
+
+
 	$mail = new PHPMailer(); 
 	// $mail->SMTPDebug  = 3;
 	$mail->IsSMTP(); 
@@ -14,10 +22,11 @@ function smtp_mailer($to,$subject, $msg){
 	$mail->CharSet = 'UTF-8';
 	$mail->Username = "USER_EMAIL_ID";
 	$mail->Password = "EMAIL_PASSWORD";
-	$mail->SetFrom("FROM_EMAIL_ID");
+	$mail->SetFrom("FROM_EMAIL_ID,$from");
 	$mail->Subject = $subject;
 	$mail->Body =$msg;
-	$mail->AddAddress($to);
+	$mail->AddAttachment($attachment);
+	$mail->AddAddress($to,);
 	$mail->SMTPOptions=array('ssl'=>array(
 		'verify_peer'=>false,
 		'verify_peer_name'=>false,
@@ -26,7 +35,7 @@ function smtp_mailer($to,$subject, $msg){
 	if(!$mail->Send()){
 		echo $mail->ErrorInfo;
 	}else{
-		return 'Sent';
+		return 'SENT SUCCESSFULLY';
 	}
-}
+
 ?>
